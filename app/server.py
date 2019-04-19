@@ -54,7 +54,7 @@ async def analyze(request):
     img_bytes = await (data['file'].read())
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
-    prob = learn.predict(img)[2]
+    prob = torch.max(learn.predict(img)[2])
     return JSONResponse({'result': str(prediction), 'probability': str(prob)})
 
 if __name__ == '__main__':
